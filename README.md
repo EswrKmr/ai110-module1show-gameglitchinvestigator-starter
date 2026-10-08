@@ -25,19 +25,40 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
-- [ ] Detail which bugs you found.
-- [ ] Explain what fixes you applied.
+## Document Your Experience
+
+**Bugs fixed:**
+Guesses outside the difficulty's range (like 150) were accepted. Added a range check in `app.py`.
+Pressing Enter did not submit. Wrapped the input in `st.form`.
+Hints were backwards ("Too High" said Go HIGHER). Swapped the messages in `check_guess`.
+
+Moved `get_range_for_difficulty`, `parse_guess`, `check_guess`, and `update_score`
+from `app.py` into `logic_utils.py` and imported them back into `app.py`.
+
+**How I used AI:** I used Claude in chat (not agent mode) to explain the cause of a glitch,
+write the fixes, and generate the refactor. I reviewed each change before using it.
+
+**Known issues I did not fix:**
+- On even-numbered attempts `app.py` converts the secret to a string, so hints can be
+  wrong for those guesses.
+- The attempt counter starts at 1, so the game allows one fewer guess than the sidebar says.
+- A rejected out-of-range guess still uses up an attempt.
 
 ## 📸 Demo Walkthrough
 
-Describe your fixed game in numbered steps so a reader can follow along without watching a video:
+## Demo Walkthrough
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+Sample game on Normal difficulty (range 1 to 100), secret number = 50:
+
+1. User enters 40 and presses Enter. The game shows "📈 Go HIGHER!" and the score goes to -5.
+2. User enters 70. The game shows "📉 Go LOWER!" and the score goes to -10.
+3. User enters 50. The game shows balloons and "You won! The secret was 50. Final score: 40."
+4. Further guesses are blocked until the user clicks New Game.
+
+Input checks:
+- Entering 150, 0, or -5 shows "Please enter a number between 1 and 100." instead of a hint.
+- Entering text like "abc" shows "That is not a number."
+- Pressing Enter in the text box submits the guess, with no need to click the button.
 
 **Screenshot** *(optional)*: <!-- Insert a screenshot of your fixed, winning game here -->
 

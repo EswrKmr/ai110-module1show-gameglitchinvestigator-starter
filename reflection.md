@@ -56,13 +56,33 @@ did not fix in this round.
 
 ## 4. What did you learn about Streamlit and state?
 
-- How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
+
+Every time you click a button, type in a box, or change a setting, Streamlit
+re-runs the entire Python script from top to bottom. That means normal variables
+get reset on every run, like a whiteboard that gets erased each time. Session
+state (`st.session_state`) is the part that doesn't get erased. It's a dictionary
+that remembers values between reruns, so things like the secret number, the score,
+and the attempt count stay put. In this game, the pattern `if "secret" not in
+st.session_state:` means "only set this the first time," so the secret doesn't
+change on every guess. I also learned that a button only returns True on the one
+rerun right after it's clicked, and that putting the text box and submit button
+inside `st.form` is what makes the Enter key submit the guess.
 
 ---
 
 ## 5. Looking ahead: your developer habits
 
-- What is one habit or strategy from this project that you want to reuse in future labs or projects?
-  - This could be a testing habit, a prompting strategy, or a way you used Git.
-- What is one thing you would do differently next time you work with AI on a coding task?
-- In one or two sentences, describe how this project changed the way you think about AI generated code.
+**One habit or strategy I want to reuse:**
+Marking the exact spot of a bug with a `# FIXME` comment and fixing one bug at a
+time. It kept me and the AI focused on a single problem, and it made it easy to
+check each change afterward. 
+
+**One thing I would do differently next time with AI on a coding task:**
+Write a few small tests (for example, for `check_guess` and `parse_guess`) before
+asking the AI to change the code, so I can prove a fix works instead of only
+checking it by hand in the game. 
+
+**How this project changed the way I think about AI-generated code:**
+AI-generated code can look clean and still be full of bugs, so I can't assume it's
+correct just because it runs. I need to read it, test it, and stay in control of
+what gets accepted. 
